@@ -1,0 +1,25 @@
+# IDE Files
+*.iml
+.idea/
+*.ipr
+.vscode/
+
+# Build Output
+/out/
+target/
+bin/
+build/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# OS and miscellaneous
+*.class
+
+# SSH keys, environment files
+*.env
+
