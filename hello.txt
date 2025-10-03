@@ -1,0 +1,5 @@
+This is an overview of what I have done for task 1, below are the steps:
+
+1) I have installed my JDK from the Adoptium website. I installed the 'Eclipse Temurin' JDK 25.
+2) Following that i installed it and then added my path within the windows settings.
+3) I created a folder called ProjectU1 using the 'mkdir' command and then proceeded to set up git. And also created my SSH keys. Then i initialised the repository.
