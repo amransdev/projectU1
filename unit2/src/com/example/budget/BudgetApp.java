@@ -8,6 +8,7 @@ public class BudgetApp {
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
+        double balance = 0.0;
 
         while (running) {
             System.out.println("==================================");
@@ -27,13 +28,14 @@ public class BudgetApp {
             scanner.nextLine();
 
 
+
             // Handling choice section
             if (choice == 1) {
-                showDepositScreen(scanner);
+                balance = showDepositScreen(scanner, balance);
             } else if (choice == 2) {
-                showWithDrawalScreen(scanner);
+                showWithDrawalScreen(scanner, balance);
             } else if (choice == 3) {
-                showCheckBalanceScreen(scanner);
+                showBalanceScreen(scanner, balance);
             } else if (choice == 4) {
                 System.out.println("Thank you for using our budget manager!");
                 running = false;
@@ -43,43 +45,83 @@ public class BudgetApp {
             }
             System.out.println();
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
-    // helpers
 
-        static void showDepositScreen(Scanner scanner) {
-            System.out.println("Please enter an amount to deposit: ");
-            scanner.nextLine();
+
+
+
+    // helpers
+    static double showDepositScreen(Scanner scanner, double balance) {
+        System.out.println("Please enter an amount to deposit (or 'b' to go back): ");
+        String input = scanner.nextLine().trim();
+        if (input.equalsIgnoreCase("b")) {
+            return balance;
+        }
+
+// below try converts the users input into a number.
+       try {
+           double amount = Double.parseDouble(input);
+           if (amount <= 0) {
+               System.out.println("Please enter a positive number.");
+           } else {
+               balance += amount;
+               System.out.println("Successfully deposited. Your new balance is: " + balance);
+           }
+
+            // handle invalid input section
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter a valid number (e.g., 12.50).");
+        }
+        System.out.println("Press Enter to return to the main menu.");
+        scanner.nextLine();
+
+        return balance;
         }
 
 
-        static void showWithDrawalScreen (Scanner scanner) {
+
+
+
+
+
+        static void showWithDrawalScreen(Scanner scanner, double balance) {
             System.out.println("Please enter an amount to withdraw:");
             scanner.nextLine();
         }
 
 
-        static void showCheckBalanceScreen (Scanner scanner) {
+
+
+
+
+
+
+        static void showBalanceScreen (Scanner scanner, double balance) {
             System.out.println("Your current balance is:  ");
             scanner.nextLine();
         }
 
 
+
+
+
+
+
         static void showExitScreen (Scanner scanner) {
             System.out.println("----Exit----");
-        }
-
 
     }
+
+
+
+
+
+
+
+
+
+
+}
+
