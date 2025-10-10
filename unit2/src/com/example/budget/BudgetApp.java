@@ -53,7 +53,7 @@ public class BudgetApp {
 
 
     // helpers
-    static double showDepositScreen(Scanner scanner, double balance) {
+    public static double showDepositScreen(Scanner scanner, double balance) {
         System.out.println("Please enter an amount to deposit (or 'b' to go back): ");
         String input = scanner.nextLine().trim();
         if (input.equalsIgnoreCase("b")) {
@@ -66,7 +66,7 @@ public class BudgetApp {
            if (amount <= 0) {
                System.out.println("Please enter a positive number.");
            } else {
-               balance += amount;
+               balance = balance + amount;
                System.out.println("Successfully deposited. Your new balance is: " + balance);
            }
 
@@ -83,22 +83,38 @@ public class BudgetApp {
 
 
 
+        public static double showWithDrawalScreen(Scanner scanner, double balance) {
+            System.out.println("Please enter an amount to withdraw (or 'b' to go back):");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("b")) {
+                return balance;
+            }
+
+            try {
+                double amount = Double.parseDouble(input);
+                if (amount <= 0) {
+                    System.out.println("Amount must be positive. ");
+                } else if (amount > balance) {
+                    System.out.println("Insufficient funds for this withdrawal. Current balance is: " + balance + ".");
+                } else {
+                    balance = balance - amount;
+                }
+                System.out.println("Successfully withdrawn. Your new balance is: " + balance);
+            }
+
+            catch (NumberFormatException e) {
+                System.out.println("Invalid number. Please try again.");
+            }
+
+            return balance;
 
 
 
-        static void showWithDrawalScreen(Scanner scanner, double balance) {
-            System.out.println("Please enter an amount to withdraw:");
-            scanner.nextLine();
-        }
 
 
-
-
-
-
-
-
-        static void showBalanceScreen (Scanner scanner, double balance) {
+        
+        public static void showBalanceScreen (Scanner scanner, double balance) {
             System.out.println("Your current balance is:  ");
             scanner.nextLine();
         }
@@ -109,7 +125,7 @@ public class BudgetApp {
 
 
 
-        static void showExitScreen (Scanner scanner) {
+        public static void showExitScreen (Scanner scanner) {
             System.out.println("----Exit----");
 
     }
