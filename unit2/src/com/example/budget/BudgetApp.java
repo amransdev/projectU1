@@ -8,7 +8,7 @@ public class BudgetApp {
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-        double balance = 0.0;
+
 
         while (running) {
             System.out.println("==================================");
