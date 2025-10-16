@@ -1,3 +1,5 @@
+package com.example.budget;
+
 public class BankAccount {
     private double balance;
     private String accountHolder;
