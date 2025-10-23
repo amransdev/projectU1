@@ -28,7 +28,7 @@ public class BudgetApp {
                     System.out.println("Opening balance cannot be negative");
                     continue; // this jumps back to the top of the loop and asks again for the opening balance.
                 }
-                break; // means if it reaches here input was valid so break signals to stop looping and proceed to next line.
+                break; // means if it reaches here, the input was valid so break signals to stop looping and proceed to next line.
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a valid number (e.g., 12.50).");
             }
