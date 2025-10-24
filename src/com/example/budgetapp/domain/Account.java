@@ -1,4 +1,4 @@
-package com.example.budgetapp;
+package com.example.budgetapp.domain;
 
 // Created this interface so the menu can talk to the interface instead of the specific class
 

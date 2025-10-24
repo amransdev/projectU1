@@ -1,4 +1,4 @@
-package com.example.budgetapp;
+package com.example.budgetapp.domain;
 
 public class BankAccount implements Account {
     private double balance;

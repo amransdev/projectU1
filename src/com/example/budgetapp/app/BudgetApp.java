@@ -1,4 +1,8 @@
-package com.example.budgetapp;
+package com.example.budgetapp.app;
+
+import com.example.budgetapp.domain.BankAccount;
+import com.example.budgetapp.domain.SavingsAccount;
+import com.example.budgetapp.domain.Account;
 import java.util.Scanner;
 
 
@@ -61,7 +65,7 @@ public class BudgetApp {
                 openingBalance = Double.parseDouble(input);
                 if (openingBalance < 0) {
                     System.out.println("Opening balance cannot be negative");
-                    continue; // this jumps back to the top of the loop and asks again for the opening balance.
+                    continue; // this ends the current iteration, but not the whole loop.
                 }
                 break; // means if it reaches here, the input was valid so break signals to stop looping and proceed to next line.
             } catch (NumberFormatException e) {
