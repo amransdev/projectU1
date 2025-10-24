@@ -1,4 +1,4 @@
-package com.example.budget;
+package com.example.budgetapp;
 
 public class SavingsAccount extends BankAccount {
     double annualInterestRate;
@@ -13,6 +13,7 @@ public class SavingsAccount extends BankAccount {
         this.annualInterestRate = annualInterestRate;
     }
 
+    @Override
     public void applyMonthlyInterest() {
         double monthlyRate = annualInterestRate / 12;
         double interest = getBalance() * monthlyRate;

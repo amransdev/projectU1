@@ -1,6 +1,6 @@
-package com.example.budget;
+package com.example.budgetapp;
 
-public class BankAccount {
+public class BankAccount implements Account {
     private double balance;
     private String accountHolder;
     private static long NEXT_ID = 1;
