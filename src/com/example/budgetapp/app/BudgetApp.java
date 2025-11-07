@@ -4,6 +4,8 @@ import com.example.budgetapp.domain.BankAccount;
 import com.example.budgetapp.domain.SavingsAccount;
 import com.example.budgetapp.domain.Account;
 import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class BudgetApp {
@@ -11,6 +13,9 @@ public class BudgetApp {
 
 
         Scanner scanner = new Scanner(System.in);
+
+        Map<String, Account> accountsByHolder = new HashMap<>(); // This creates a map to store and find the accounts by holder name.
+
         System.out.println("Enter account holder name: ");
         String holder = scanner.nextLine().trim();
 
@@ -80,6 +85,9 @@ public class BudgetApp {
             account = new SavingsAccount(openingBalance, holder, annualRate);
         }
 
+        accountsByHolder.put(holder,account); // means to save this account object in the map under the key 'holder'.
+        System.out.println("Account stored for " + holder + "!");
+
         boolean running = true;
         while (running) {
             System.out.println("==================================");
@@ -95,6 +103,7 @@ public class BudgetApp {
             System.out.println("3) Check balance");
             System.out.println("4) Exit");
             System.out.println("5) Apply monthly interest (Savings only)");
+            System.out.println("5) Look up account holder by name");
 
             System.out.println("Choose an option 1-5");
             String choiceText = scanner.nextLine().trim();
