@@ -8,6 +8,7 @@ public interface Account {
     double getBalance();
     double depositAmount(double amount);
     double withdrawAmount(double amount);
+    long getId();
 
     default void applyMonthlyInterest() {}
 }

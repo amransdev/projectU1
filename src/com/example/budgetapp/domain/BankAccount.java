@@ -18,6 +18,10 @@ public class BankAccount implements Account {
         this.id = NEXT_ID++;
     }
 
+    public long getId() {
+        return id;
+    }
+
 
 
     public String getAccountDetails() {

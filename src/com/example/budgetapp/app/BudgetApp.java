@@ -85,7 +85,22 @@ public class BudgetApp {
             account = new SavingsAccount(openingBalance, holder, annualRate);
         }
 
-        accountsByHolder.put(holder,account); // means to save this account object in the map under the key 'holder'.
+        String holderKey = holder.toLowerCase();
+
+        while(accountsByHolder.containsKey(holderKey)) {
+            System.out.println("Warning: An account already exists for this holder name. ");
+            System.out.println("Please enter a different name");
+            holder = scanner.nextLine().trim();
+
+            while(holder.isBlank()) {
+                System.out.println("Name cannot be blank. Enter account holder name:");
+                holder = scanner.nextLine().trim();
+            }
+
+            holderKey = holder.toLowerCase();
+        }
+
+        accountsByHolder.put(holderKey, account);
         System.out.println("Account stored for " + holder + "!");
 
         boolean running = true;
@@ -103,15 +118,16 @@ public class BudgetApp {
             System.out.println("3) Check balance");
             System.out.println("4) Exit");
             System.out.println("5) Apply monthly interest (Savings only)");
-            System.out.println("5) Look up account holder by name");
+            System.out.println("6) Look up account holder by name");
 
-            System.out.println("Choose an option 1-5");
+
+            System.out.println("Choose an option 1-6");
             String choiceText = scanner.nextLine().trim();
             int choice;
             try {
                 choice = Integer.parseInt(choiceText);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid option. Please enter a number 1-5.");
+                System.out.println("Invalid option. Please enter a number 1-6.");
                 continue;
             }
 
@@ -128,9 +144,37 @@ public class BudgetApp {
                 running = false;
             } else if (choice == 5) {
                 applyMonthlyInterest(scanner, account);
-            } else {
+            } else if(choice ==6) {
+                System.out.println("Enter account holder name: ");
+                String name = scanner.nextLine().trim();
+
+                Account found = accountsByHolder.get(name.toLowerCase());
+
+                if(found == null) {
+                    System.out.println("No account found for: " + name);
+                } else {
+                    System.out.println("---- Account Details ----");
+
+                    //Account number(id)
+                    long accountNumber = ((BankAccount) found).getId();
+                    System.out.println("Account number: " + accountNumber);
+
+                    //Account type
+                    String type = (found instanceof SavingsAccount) ? "Savings Account" : "Bank Account";
+                    System.out.println("Account Type: " + type);
+
+                    //Holder name and balance
+                    System.out.println("Holder: " + found.getAccountHolder());
+                    System.out.printf("Balance: £%.2f%n", found.getBalance());
+                    System.out.println("--------------------------------");
+                }
+            }
+
+            else {
                 System.out.println("Invalid option. Please try again.");
             }
+            System.out.println("Press Enter to return to the main menu....");
+            scanner.nextLine();
         }
 }
 
