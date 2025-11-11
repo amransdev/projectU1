@@ -108,6 +108,11 @@ public class BudgetApp {
             System.out.println("==================================");
             System.out.println("Welcome to Budget Manager CLI");
             System.out.println("===================================\n");
+
+            System.out.printf("Current account: %s (ID #%d)%n",
+                    account.getAccountHolder(),
+                    ((BankAccount) account).getId());
+
             System.out.printf("£%.2f%n", account.getBalance());
 
             System.out.println("Main Menu");
