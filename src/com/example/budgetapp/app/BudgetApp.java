@@ -119,15 +119,15 @@ public class BudgetApp {
             System.out.println("4) Exit");
             System.out.println("5) Apply monthly interest (Savings only)");
             System.out.println("6) Look up account holder by name");
+            System.out.println("7) Create a new account");
+            System.out.println("Choose an option 1-7");
 
-
-            System.out.println("Choose an option 1-6");
             String choiceText = scanner.nextLine().trim();
             int choice;
             try {
                 choice = Integer.parseInt(choiceText);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid option. Please enter a number 1-6.");
+                System.out.println("Invalid option. Please enter a number 1-7.");
                 continue;
             }
 
@@ -167,6 +167,17 @@ public class BudgetApp {
                     System.out.println("Holder: " + found.getAccountHolder());
                     System.out.printf("Balance: £%.2f%n", found.getBalance());
                     System.out.println("--------------------------------");
+                }
+            }
+
+            else if (choice == 7) {
+                Account newAcc = createNewAccount(scanner, accountsByHolder);
+                if(newAcc != null) {
+                    System.out.println("Switch to this account now? (y/n):");
+                    String ans = scanner.nextLine().trim();
+                    if(ans.equalsIgnoreCase("y")) {
+                        account = newAcc;
+                    }
                 }
             }
 
@@ -254,4 +265,91 @@ public class BudgetApp {
     public static void showExitScreen() {
         System.out.println("----Exit----");
     }
-}
+
+    public static Account createNewAccount(Scanner scanner, Map<String, Account> accountsByHolder) {
+        // Holder name
+        System.out.println("Enter account holder name");
+        String holder = scanner.nextLine().trim();
+
+        while(holder.isBlank()) {
+            System.out.println("Name cannot be blank. Enter account holder name:");
+            holder = scanner.nextLine().trim();
+        }
+
+        String holderKey = holder.toLowerCase();
+        while(accountsByHolder.containsKey(holderKey)) {
+            System.out.println("An account already exists for this holder name.");
+            System.out.println("Please enter a different name");
+            holder = scanner.nextLine().trim();
+            while(holder.isBlank()) {
+                System.out.println("Name cannot be blank. Enter account holder name");
+                holder = scanner.nextLine().trim();
+            }
+            holderKey = holder.toLowerCase();
+        }
+
+
+        // account type
+        System.out.println("Choose account type ");
+        System.out.println("1) Standard (BankAccount)");
+        System.out.println("2) SavingsAccount");
+        int accountType;
+        while (true) {
+            String t = scanner.nextLine().trim();
+            try {
+                accountType = Integer.parseInt(t);
+                if (accountType == 1 || accountType == 2) break;
+            } catch (NumberFormatException ignored) {}
+            System.out.println("Please enter 1 or 2:");
+        }
+
+        // --- Annual rate if Savings ---
+        double annualRate = 0.0;
+        if (accountType == 2) {
+            while (true) {
+                System.out.println("Enter annual interest rate as a decimal (e.g. 0.03 for 3%):");
+                String r = scanner.nextLine().trim();
+                try {
+                    annualRate = Double.parseDouble(r);
+                    if (annualRate < 0) {
+                        System.out.println("Rate cannot be negative");
+                        continue;
+                    }
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid decimal number (e.g., 0.02).");
+                }
+            }
+        }
+
+        // - Opening balance -
+        double openingBalance;
+        while (true) {
+            System.out.println("Enter opening balance (e.g., 100.00): ");
+            String input = scanner.nextLine().trim();
+            try {
+                openingBalance = Double.parseDouble(input);
+                if (openingBalance < 0) {
+                    System.out.println("Opening balance cannot be negative");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number (e.g., 12.50).");
+            }
+        }
+
+        // Create and store -
+        Account account;
+        if (accountType == 1) {
+            account = new BankAccount(openingBalance, holder);
+        } else {
+            account = new SavingsAccount(openingBalance, holder, annualRate);
+        }
+
+        accountsByHolder.put(holderKey, account);
+        System.out.println("Account stored for " + holder + "!");
+        return account;
+        }
+    }
+

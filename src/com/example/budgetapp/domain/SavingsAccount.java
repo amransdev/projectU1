@@ -1,5 +1,6 @@
 package com.example.budgetapp.domain;
 
+
 public class SavingsAccount extends BankAccount {
     double annualInterestRate;
 
